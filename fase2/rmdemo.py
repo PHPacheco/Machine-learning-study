@@ -32,7 +32,7 @@ def main():
     print(f"theta1 = {theta[1, 0]:.6f}")
     print(f"theta2 = {theta[2, 0]:.6f}")
 
-    # Exemplo de previsao para casa com 1650 pes^2 e 3 quartos.
+    # Exemplo de previsao para casa com 1650 pes e 3 quartos.
     x_novo = np.array([1, 1650, 3], dtype=float)
     preco_previsto = float(x_novo @ theta[:, 0])
     print(f"\nPreco previsto para casa de 1650 pes e 3 quartos: {preco_previsto:.2f}")
