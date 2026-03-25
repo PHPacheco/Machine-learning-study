@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import math
 
 from ex01 import AnaliseLinear
 
@@ -16,17 +17,25 @@ def main():
     x4 = [10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0]
     y4 = [7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73]
 
+    x5 = [10.0, 8.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0]
+    y5 = [7.46, 6.77, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73]
+
     datasets = [
         ("Dataset 1", x1, y1),
         ("Dataset 2", x2, y2),
         ("Dataset 3", x3, y3),
         ("Dataset 4", x4, y4),
+        ("Dataset 5", x5, y5),
     ]
 
     analise = AnaliseLinear()
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-    axes = axes.flatten()
+    n_datasets = len(datasets)
+    n_cols = 3
+    n_rows = math.ceil(n_datasets / n_cols)
+
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 4 * n_rows))
+    axes = axes.flatten() if hasattr(axes, "flatten") else [axes]
 
     for i, (nome, x, y) in enumerate(datasets):
         r = analise.correlacao(x, y)
@@ -45,6 +54,9 @@ def main():
         )
 
         print(f"{nome}: r={r:.6f}, beta0={beta0:.6f}, beta1={beta1:.6f}")
+
+    for j in range(n_datasets, len(axes)):
+        axes[j].axis("off")
 
     plt.tight_layout()
     plt.show()
