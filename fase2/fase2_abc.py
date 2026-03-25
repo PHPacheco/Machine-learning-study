@@ -8,8 +8,8 @@ COLUNAS = ["tamanho", "quartos", "preco"]
 
 
 def carregar_base() -> pd.DataFrame:
-    csv_path = Path("C:/Users/pedro/OneDrive/Documentos/AprendizadoDeMaquina/trabalho1/fase2/data.csv")
-    mat_path = Path("C:/Users/pedro/OneDrive/Documentos/AprendizadoDeMaquina/trabalho1/fase2/data.mat")
+    csv_path = Path("fase2/data.csv")
+    mat_path = Path("fase2/data.mat")
 
     if csv_path.exists():
         dados = pd.read_csv(csv_path, header=None, names=COLUNAS)
