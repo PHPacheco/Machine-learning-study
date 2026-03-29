@@ -128,49 +128,59 @@ def main():
     fig = plt.figure(figsize=(7, 5))
     ax = fig.add_subplot(111, projection="3d")
 
+    # Pontos de dispersao
     ax.scatter(
         tamanho,
         quartos,
         y,
         facecolors="none",
         edgecolors="blue",
-        s=40
+        s=40,
+        zorder=5
     )
 
     # regressao multipla
-    y_reg = theta[0, 0] + theta[1, 0] * tamanho + theta[2, 0] * quartos
+    tam_grid = np.linspace(tamanho.min(), tamanho.max(), 30)
+    qua_grid = np.linspace(quartos.min(), quartos.max(), 30)
+    TAM, QUA = np.meshgrid(tam_grid, qua_grid)
+    Z_PLANO = theta[0, 0] + theta[1, 0] * TAM + theta[2, 0] * QUA
 
-    # linha quebrada estilo da professora
-    for i in range(len(tamanho) - 1):
-        ax.plot(
-            tamanho[i:i+2],
-            quartos[i:i+2],
-            y_reg[i:i+2],
-            "r-",
-            linewidth=1
-        )
+    ax.plot_surface(
+        TAM, QUA, Z_PLANO,
+        alpha=0.35,
+        color="red",
+        edgecolor="none"
+    )
+
+    ax.plot_wireframe(
+        TAM, QUA, Z_PLANO,
+        alpha=0.15,
+        color="darkred",
+        linewidth=0.5
+    )
+    # Fim plano de regressão
 
     ax.set_xlabel("Tamanho da Casa", fontsize=9, labelpad=10)
     ax.set_ylabel("Numero de Quartos", fontsize=9, labelpad=10)
     ax.set_zlabel("Preco por R$ 10.000", fontsize=9, labelpad=10)
 
-    ax.set_title(
-        "Coeficientes: %.2f %.2f %.2f"
-        % (theta[0, 0], theta[1, 0], theta[2, 0]),
-        fontsize=10,
-        fontweight="bold",
-        pad=15
+    titulo = (
+        f"Regressao Multipla  |  "
+        f"r(Tam, Preco) = {r_tam:.4f}   "
+        f"r(Qua, Preco) = {r_qua:.4f}\n"
+        f"Coef: θ0={theta[0,0]:.2f}  θ1={theta[1,0]:.2f}  θ2={theta[2,0]:.2f}"
     )
+    ax.set_title(titulo, fontsize=9, fontweight="bold", pad=15)
 
     ax.tick_params(axis="both", which="major", labelsize=8)
 
     ax.view_init(elev=25, azim=-60)
 
-    # previsao
     x_novo = np.array([1, 1650, 3], dtype=float)
     preco_previsto = float(x_novo @ theta[:, 0])
     print(f"\nPreco previsto para casa de 1650 pes e 3 quartos: {preco_previsto:.2f}")
 
+    plt.tight_layout()
     plt.show()
 
 
