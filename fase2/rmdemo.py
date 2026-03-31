@@ -87,6 +87,45 @@ def main():
     fig = plt.figure(figsize=(10, 7))
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(tamanho, quartos, y_plot, edgecolors="blue", facecolors="none", s=50)
+    
+    # f) Trace a linha da regressão no Gráfico de Dispersão. Você pode girar este gráfico para visualizar melhor os dados.
+    # Usamos theta.flatten() para garantir que os coeficientes sejam tratados como escalares no cálculo
+    t0, t1, t2 = theta.flatten()
+    y_reg = t0 + t1 * tamanho + t2 * quartos
+    ax.plot(tamanho, quartos, y_reg, "r-", linewidth=2)
+    
+    ax.set_xlabel("Tamanho da casa")
+    ax.set_ylabel("Número de quartos")
+    ax.set_zlabel("Preço da casa")
+
+    # g) Mostre na figura os coeficientes de correlação entre Tamanho da casa e Preço e Número de quartos e Preço.
+    ax.set_title(f"Correlação: Tamanho da casa e Preço ({r_tam:.4f})\nCorrelação: Número de quartos e Preço ({r_qua:.4f})")
+
+    # h) Calcule o preço de uma casa que tem tamanho de 1650 e 3 quartos. O resultado deve ser igual a 293081. 
+    # Aumente e diminua a quantidade de número de quartos. O que acontece? Por qual motivo?
+    # O uso do .item() extrai o valor numérico de dentro do array resultante
+    preco_previsto_3q = (np.array([1, 1650, 3]) @ theta).item()
+    preco_previsto_2q = (np.array([1, 1650, 2]) @ theta).item()
+    preco_previsto_4q = (np.array([1, 1650, 4]) @ theta).item()
+    
+    print(f"\nh) Teste de previsão (1650 pés, 3 quartos): {preco_previsto_3q:.2f}")
+    print(f"   (Valor esperado no enunciado: 293081)")
+    print(f"Preço com 2 quartos: {preco_previsto_2q:.2f}")
+    print(f"Preço com 4 quartos: {preco_previsto_4q:.2f}")
+    print("Motivo: O preço aumenta com mais quartos pois o coeficiente correspondente (theta2) é positivo.")
+
+    # i) Compare seus resultados com a função de regressão linear múltipla do python. 
+    # Para isso você irá precisar das bibliotecas numpy e scikit-learn.
+    model_sk = LinearRegression()
+    model_sk.fit(X_base, y)
+    theta_sk = np.array([model_sk.intercept_[0], model_sk.coef_[0][0], model_sk.coef_[0][1]])
+    
+    print("\ni) Comparação com Scikit-Learn:")
+    print(f"- Coeficientes (Equação Normal): {theta.flatten()}")
+    print(f"- Coeficientes (Scikit-Learn): {theta_sk}")
+
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == "__main__":
     main()
