@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
 from fase2_utils import calcular_theta, carregar_base
 
@@ -15,23 +14,20 @@ def executar(base=None):
     quartos = base["quartos"].to_numpy(dtype=float)
     preco = base["preco"].to_numpy(dtype=float)
     theta = calcular_theta(base).flatten()
-
-    grade_tamanho = np.linspace(tamanho.min(), tamanho.max(), 20)
-    grade_quartos = np.linspace(quartos.min(), quartos.max(), 20)
-    malha_tamanho, malha_quartos = np.meshgrid(grade_tamanho, grade_quartos)
-    malha_preco = theta[0] + theta[1] * malha_tamanho + theta[2] * malha_quartos
+    t0, t1, t2 = theta
+    y_reg = t0 + t1 * tamanho + t2 * quartos
 
     fig = plt.figure(figsize=(10, 7))
-    fig.suptitle("Exercicio f - Plano de Regressao no Grafico 3D", fontsize=14)
+    fig.suptitle("Exercicio f - Linha de Regressao no Grafico 3D", fontsize=14)
     ax = fig.add_subplot(111, projection="3d")
     ax.scatter(tamanho, quartos, preco, edgecolors="blue", facecolors="none", s=50)
-    ax.plot_surface(malha_tamanho, malha_quartos, malha_preco, alpha=0.35, cmap="Reds")
-    ax.set_xlabel("Tamanho")
-    ax.set_ylabel("Quartos")
-    ax.set_zlabel("Preco")
+    ax.plot(tamanho, quartos, y_reg, "r-", linewidth=2)
+    ax.set_xlabel("Tamanho da casa")
+    ax.set_ylabel("Numero de quartos")
+    ax.set_zlabel("Preco da casa")
     ax.view_init(elev=22, azim=45)
 
-    print("f) Plano de regressao tracado no grafico 3D.")
+    print("f) Linha de regressao tracada no grafico 3D.")
     return fig, ax
 
 
