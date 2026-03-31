@@ -10,7 +10,7 @@ def regmultipla(X, y):
     if X.shape[0] != y.shape[0]:
         raise ValueError("X e y devem ter o mesmo numero de linhas.")
 
-    # Resolução da Equação Normal: beta = (X' X)^-1 X' y
-    # O comando np.linalg.solve é mais estável que inverter a matriz diretamente
+    # Resolução da Equação Normal conforme o enunciado: beta = (X' X)^-1 X' y
+    # O comando np.linalg.solve é a forma mais estável de resolver o sistema (X'X) * beta = X'y
     theta = np.linalg.solve(X.T @ X, X.T @ y)
     return theta
