@@ -28,7 +28,7 @@ def executar(base=None):
     ax.scatter(tamanho, quartos, preco, edgecolors="blue", facecolors="none", s=50)
     ax.plot_surface(malha_tamanho, malha_quartos, malha_preco, alpha=0.35, cmap="Reds")
     ax.set_xlabel("Tamanho")
-    ax.set_ylabel("Quartos")
+    ax.set_ylabel("Quartos")    
     ax.set_zlabel("Preco")
     ax.set_title(
         "Regressao Multipla\n"
