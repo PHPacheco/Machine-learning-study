@@ -1,0 +1,5 @@
+Justificativa Letra M
+
+O modelo de grau 20 apresenta pior desempenho no teste porque sofre de overfitting. 
+Apesar de ter o menor erro no treino, ele memoriza o ruído dos dados em vez de aprender o padrão real, resultando em uma curva extremamente oscilatória e cheia de zigue-zagues. 
+Essa complexidade excessiva faz com que o modelo perca a capacidade de generalização, tornando-o incapaz de prever com precisão novos dados.
