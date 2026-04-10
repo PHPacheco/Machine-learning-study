@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from c import calcular_polinomio
-from h import QuestaoH
+from fase3.h import QuestaoH
 
 def calcular_mse(y_real, y_prev):
     return np.mean((y_real - y_prev) ** 2)
