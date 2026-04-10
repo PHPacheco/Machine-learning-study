@@ -5,20 +5,24 @@ def executar(base=None):
     if base is None:
         base = carregar_base()
 
+    features = base.columns[:-1].tolist()
+    target = base.columns[-1]
+
     x_base, x, y = montar_X_y(base)
     print("c) X e y gerados corretamente.")
-    print("X_base contem apenas as variaveis independentes: tamanho e quartos.")
-    print("X contem a coluna de 1 para o intercepto, seguida de tamanho e quartos.")
-    print("y contem a variavel dependente: preco.")
+    print(f"X_base contem apenas as variaveis independentes: {', '.join(features)}.")
+    print(f"X contem a coluna de 1 para o intercepto, seguida de {', '.join(features)}.")
+    print(f"y contem a variavel dependente: {target}.")
     print(f"Shape de X_base: {x_base.shape}")
     print(f"Shape de X: {x.shape}")
     print(f"Shape de y: {y.shape}")
     print("\nPrimeiras linhas de X_base:")
-    print(base[["tamanho", "quartos"]].head().to_string(index=False))
+    print(base[features].head().to_string(index=False))
     print("\nPrimeiras linhas de X:")
-    print(base.assign(intercepto=1)[["intercepto", "tamanho", "quartos"]].head().to_string(index=False))
+    # Para visualizacao, mostramos o intercepto e as features
+    print(base.assign(intercepto=1)[["intercepto"] + features].head().to_string(index=False))
     print("\nPrimeiras linhas de y:")
-    print(base[["preco"]].head().to_string(index=False))
+    print(base[[target]].head().to_string(index=False))
     return x_base, x, y
 
 

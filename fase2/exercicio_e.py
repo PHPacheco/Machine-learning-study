@@ -11,29 +11,44 @@ def executar(base=None):
     if base is None:
         base = carregar_base()
 
-    tamanho = base["tamanho"].to_numpy(dtype=float)
-    quartos = base["quartos"].to_numpy(dtype=float)
-    preco = base["preco"].to_numpy(dtype=float)
+    features = base.columns[:-1].tolist()
+    target = base.columns[-1]
     theta = calcular_theta(base)
-    beta0, beta1, beta2 = theta.flatten()
+    theta_flat = theta.flatten()
+    
+    beta0 = theta_flat[0]
+    outros_betas = theta_flat[1:]
 
-    fig = plt.figure(figsize=(10, 7))
-    fig.suptitle("Exercicio e - Dispersao 3D da Regressao Multipla", fontsize=14)
-    ax = fig.add_subplot(111, projection="3d")
-    ax.scatter(tamanho, quartos, preco, edgecolors="blue", facecolors="none", s=50)
-    ax.set_xlabel("Tamanho")
-    ax.set_ylabel("Quartos")
-    ax.set_zlabel("Preco")
+    num_features = len(features)
+    
+    fig, ax = None, None
+    if num_features == 2:
+        x1_data = base[features[0]].to_numpy(dtype=float)
+        x2_data = base[features[1]].to_numpy(dtype=float)
+        y_data = base[target].to_numpy(dtype=float)
+
+        fig = plt.figure(figsize=(10, 7))
+        fig.suptitle(f"Exercicio e - Dispersao 3D da Regressao Multipla ({target})", fontsize=14)
+        ax = fig.add_subplot(111, projection="3d")
+        ax.scatter(x1_data, x2_data, y_data, edgecolors="blue", facecolors="none", s=50)
+        ax.set_xlabel(features[0])
+        ax.set_ylabel(features[1])
+        ax.set_zlabel(target)
+    else:
+        print(f"e) Pulando o grafico 3D (exige exatamente 2 variaveis, dataset possui {num_features}).")
 
     print("e) Regressao multipla calculada.")
     print("Coeficientes da regressao multipla:")
-    print(f"beta0 (intercepto): {beta0:.2f}")
-    print(f"beta1 (tamanho):    {beta1:.6f}")
-    print(f"beta2 (quartos):    {beta2:.6f}")
-    print(
-        "Equacao do modelo: "
-        f"preco = {beta0:.2f} + ({beta1:.6f} * tamanho) + ({beta2:.6f} * quartos)"
-    )
+    print(f"beta0 (intercepto): {beta0:.4f}")
+    
+    equacao = f"{target} = {beta0:.4f}"
+    for i, col in enumerate(features):
+        beta_i = outros_betas[i]
+        print(f"beta{i+1} ({col}): {beta_i:.6f}")
+        equacao += f" + ({beta_i:.6f} * {col})"
+        
+    print(f"Equacao do modelo: {equacao}")
+    
     return fig, ax, theta
 
 
