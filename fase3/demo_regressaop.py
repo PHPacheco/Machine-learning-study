@@ -4,9 +4,9 @@ from c import QuestaoC
 from d import QuestaoD
 from e import QuestaoE
 from f import QuestaoF
-from fase3.h import QuestaoH
-from fase3.i import QuestaoI
-from fase3.m import QuestaoM
+from h import QuestaoH
+from i import QuestaoI
+from m import QuestaoM
 from k import QuestaoK
 from l import QuestaoL
 
