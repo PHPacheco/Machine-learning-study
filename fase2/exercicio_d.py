@@ -11,32 +11,34 @@ def executar(base=None):
     if base is None:
         base = carregar_base()
 
-    tamanho = base["tamanho"].to_numpy(dtype=float)
-    quartos = base["quartos"].to_numpy(dtype=float)
-    preco = base["preco"].to_numpy(dtype=float)
+    features = base.columns[:-1].tolist()
+    target = base.columns[-1]
+    y_data = base[target].to_numpy(dtype=float)
 
-    corr_tamanho, corr_quartos = calcular_correlacoes(base)
-    ang_tamanho, lin_tamanho = np.polyfit(tamanho, preco, 1)
-    ang_quartos, lin_quartos = np.polyfit(quartos, preco, 1)
+    correlacoes = calcular_correlacoes(base)
+    num_features = len(features)
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    fig.suptitle("Exercicio d - Correlacao e Regressao Linear Simples", fontsize=14)
+    # Definimos o layout dos subplots
+    fig, axes = plt.subplots(1, num_features, figsize=(6 * num_features, 5), squeeze=False)
+    fig.suptitle(f"Exercicio d - Correlacao e Regressao Linear Simples ({target})", fontsize=14)
 
-    axes[0].scatter(tamanho, preco, edgecolors="blue", facecolors="none")
-    axes[0].plot(tamanho, lin_tamanho + ang_tamanho * tamanho, "r-")
-    axes[0].set_title(f"Tamanho x Preco\ncorrelacao = {corr_tamanho:.4f}")
-    axes[0].set_xlabel("Tamanho")
-    axes[0].set_ylabel("Preco")
-
-    axes[1].scatter(quartos, preco, edgecolors="blue", facecolors="none")
-    axes[1].plot(quartos, lin_quartos + ang_quartos * quartos, "r-")
-    axes[1].set_title(f"Quartos x Preco\ncorrelacao = {corr_quartos:.4f}")
-    axes[1].set_xlabel("Quartos")
-    axes[1].set_ylabel("Preco")
+    for i, col in enumerate(features):
+        x_data = base[col].to_numpy(dtype=float)
+        corr = correlacoes[col]
+        
+        # Ajuste linear simples para a reta
+        ang, lin = np.polyfit(x_data, y_data, 1)
+        
+        ax = axes[0, i]
+        ax.scatter(x_data, y_data, edgecolors="blue", facecolors="none")
+        ax.plot(x_data, lin + ang * x_data, "r-")
+        ax.set_title(f"{col} x {target}\ncorrelacao = {corr:.4f}")
+        ax.set_xlabel(col)
+        ax.set_ylabel(target)
 
     fig.tight_layout(rect=(0, 0, 1, 0.95))
-    print("d) Graficos de dispersao com correlacao e regressao gerados.")
-    return fig, (corr_tamanho, corr_quartos)
+    print(f"d) Graficos de dispersao para {num_features} variaveis gerados.")
+    return fig, correlacoes
 
 
 if __name__ == "__main__":

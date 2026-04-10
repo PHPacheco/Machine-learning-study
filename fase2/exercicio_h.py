@@ -7,33 +7,47 @@ def executar(base=None):
     if base is None:
         base = carregar_base()
 
+    features = base.columns[:-1].tolist()
+    target = base.columns[-1]
+    num_features = len(features)
+    
     theta = calcular_theta(base).flatten()
-    beta0, beta1, beta2 = theta
-    preco_3_quartos = float(np.array([1, 1650, 3]) @ theta)
-    preco_2_quartos = float(np.array([1, 1650, 2]) @ theta)
-    preco_4_quartos = float(np.array([1, 1650, 4]) @ theta)
+    
+    # Valores base para a previsao (tamanho 1650 e quartos 2, 3, 4)
+    # Se nao houver as colunas esperadas, usamos as duas primeiras features.
+    val_feat1 = 1650
+    vals_feat2 = [3, 2, 4]
+    
+    # Para features extras (se houver), usamos a media
+    medias = base[features].mean().to_numpy()
+    
+    def predizer(f2_val):
+        x_pred = np.ones(num_features + 1)
+        x_pred[1] = val_feat1
+        x_pred[2] = f2_val
+        if num_features > 2:
+            x_pred[3:] = medias[2:]
+        return float(x_pred @ theta)
 
-    print("h) Previsao para casa com 1650 de tamanho:")
+    previsoes = [predizer(v) for v in vals_feat2]
+
+    print(f"h) Previsao para {features[0]} = {val_feat1} e variando {features[1]}:")
     print("Coeficientes usados na previsao:")
-    print(f"beta0 (intercepto): {beta0:.2f}")
-    print(f"beta1 (tamanho):    {beta1:.6f}")
-    print(f"beta2 (quartos):    {beta2:.6f}")
-    print(
-        "Equacao do modelo: "
-        f"preco = {beta0:.2f} + ({beta1:.6f} * tamanho) + ({beta2:.6f} * quartos)"
-    )
+    print(f"beta0 (intercepto): {theta[0]:.4f}")
+    for i, col in enumerate(features):
+        print(f"beta{i+1} ({col}): {theta[i+1]:.6f}")
+    
     print()
-    print(f"3 quartos: {preco_3_quartos:.2f}")
-    print(f"2 quartos: {preco_2_quartos:.2f}")
-    print(f"4 quartos: {preco_4_quartos:.2f}")
+    for v, p in zip(vals_feat2, previsoes):
+        print(f"{v} {features[1]}: {p:.2f}")
    
-    print(
-        "Ao aumentar a quantidade de quartos, o preco previsto cai; "
-        "ao diminuir, ele sobe. Isso acontece porque, mantendo o "
-        "tamanho fixo, o coeficiente de quartos na regressao ficou "
-        "negativo neste conjunto de dados."
-    )
-    return preco_3_quartos, preco_2_quartos, preco_4_quartos
+    if num_features >= 2:
+        print(
+            f"\nNota: Ao variar {features[1]}, observamos o impacto direto do coeficiente beta2 "
+            f"no {target} previsto, mantendo as outras variaveis fixas."
+        )
+    
+    return tuple(previsoes)
 
 
 if __name__ == "__main__":

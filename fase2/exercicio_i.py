@@ -8,25 +8,33 @@ def executar(base=None):
     if base is None:
         base = carregar_base()
 
+    features = base.columns[:-1].tolist()
+    target = base.columns[-1]
+
     x_base, _, y = montar_X_y(base)
     theta_manual = calcular_theta(base).flatten()
 
     modelo = LinearRegression()
     modelo.fit(x_base, y)
-    theta_sklearn = np.array(
-        [modelo.intercept_.item(), modelo.coef_.flatten()[0], modelo.coef_.flatten()[1]]
-    )
+    
+    # Montamos o theta do sklearn: [intercepto, coef1, coef2, ...]
+    intercepto = modelo.intercept_
+    if isinstance(intercepto, np.ndarray):
+        intercepto = intercepto.item()
+        
+    theta_sklearn = np.hstack(([intercepto], modelo.coef_.flatten()))
 
-    print("i) Comparacao com scikit-learn:")
-    print("Equacao normal:")
-    print(f"beta0 (intercepto): {theta_manual[0]:.2f}")
-    print(f"beta1 (tamanho):    {theta_manual[1]:.6f}")
-    print(f"beta2 (quartos):    {theta_manual[2]:.6f}")
-    print()
-    print("Scikit-learn:")
-    print(f"beta0 (intercepto): {theta_sklearn[0]:.2f}")
-    print(f"beta1 (tamanho):    {theta_sklearn[1]:.6f}")
-    print(f"beta2 (quartos):    {theta_sklearn[2]:.6f}")
+    print(f"i) Comparacao com scikit-learn ({target}):")
+    print("Metodo: Equacao Normal (Manual)")
+    print(f"beta0 (intercepto): {theta_manual[0]:.4f}")
+    for i, col in enumerate(features):
+        print(f"beta{i+1} ({col}): {theta_manual[i+1]:.6f}")
+    
+    print("\nMetodo: Scikit-learn (Otimizado)")
+    print(f"beta0 (intercepto): {theta_sklearn[0]:.4f}")
+    for i, col in enumerate(features):
+        print(f"beta{i+1} ({col}): {theta_sklearn[i+1]:.6f}")
+        
     return theta_manual, theta_sklearn
 
 
