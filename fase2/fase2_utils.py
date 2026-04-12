@@ -13,7 +13,6 @@ def carregar_base() -> pd.DataFrame:
     mat_path = Path(__file__).with_name("data.mat")
 
     if csv_path.exists():
-        # Lemos primeiro sem nomes para detectar a quantidade de colunas
         df_temp = pd.read_csv(csv_path, header=None)
         num_cols = df_temp.shape[1]
         
