@@ -38,7 +38,7 @@ print("\nExemplo de X (depois do LabelEncoder):")
 print(X_risco_credito[0])
 
 # c) SALVAR O ARQUIVO PRÉ-PROCESSADO
-with open('risco_credito.pkl', 'wb') as f:
+with open('3_NaiveBayes/Parte1/risco_credito.pkl', 'wb') as f:
     pickle.dump([X_risco_credito, y_risco_credito], f)
 
 print("\nArquivo 'risco_credito.pkl' salvo.")
