@@ -1,3 +1,4 @@
+# Julia Welter, Pedro Pacheco, Pedro Albuquerque e Tiago Rosa
 import scipy.io as sio
 import numpy as np
 import os
