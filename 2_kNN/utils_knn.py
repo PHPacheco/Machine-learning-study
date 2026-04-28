@@ -1,3 +1,4 @@
+# Julia Welter, Pedro Pacheco, Pedro Albuquerque e Tiago Rosa
 import numpy as np
 import matplotlib.pyplot as plt
 
