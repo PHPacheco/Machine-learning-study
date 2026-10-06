@@ -57,7 +57,7 @@ class QuestaoG:
         n = melhor["grau"]
         for i, beta in enumerate(melhor["coeficientes"]):
             exp = n - i
-            nome = f"β{exp}" if exp > 0 else "β₀"
+            nome = f"beta_{exp}" if exp > 0 else "beta_0"
             print(f"{nome:>4} = {beta:+.6f}")
 
 

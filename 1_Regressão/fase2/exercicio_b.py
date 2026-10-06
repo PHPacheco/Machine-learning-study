@@ -1,4 +1,4 @@
-from Regressão.fase2.fase2_utils import carregar_base
+from fase2_utils import carregar_base
 
 
 def executar(base=None):

@@ -1,6 +1,6 @@
 import numpy as np
 
-from Regressão.fase2.fase2_utils import calcular_theta, carregar_base
+from fase2_utils import calcular_theta, carregar_base
 
 
 def executar(base=None):

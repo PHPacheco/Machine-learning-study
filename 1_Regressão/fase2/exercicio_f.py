@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Regressão.fase2.fase2_utils import calcular_theta, carregar_base
+from fase2_utils import calcular_theta, carregar_base
 
 
 plt.style.use("seaborn-v0_8-whitegrid")

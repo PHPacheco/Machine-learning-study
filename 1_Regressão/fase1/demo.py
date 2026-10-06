@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import math
 
-from Regressão.fase1.ex01 import AnaliseLinear
+from ml_studies.regression import AnaliseLinear
 
 
 def main():

@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
 
-from Regressão.fase2.exercicio_a import executar as executar_a
-from Regressão.fase2.exercicio_b import executar as executar_b
-from Regressão.fase2.exercicio_c import executar as executar_c
-from Regressão.fase2.exercicio_d import executar as executar_d
-from Regressão.fase2.exercicio_e import executar as executar_e
-from Regressão.fase2.exercicio_f import executar as executar_f
-from Regressão.fase2.exercicio_g import executar as executar_g
-from Regressão.fase2.exercicio_h import executar as executar_h
-from Regressão.fase2.exercicio_i import executar as executar_i
+from exercicio_a import executar as executar_a
+from exercicio_b import executar as executar_b
+from exercicio_c import executar as executar_c
+from exercicio_d import executar as executar_d
+from exercicio_e import executar as executar_e
+from exercicio_f import executar as executar_f
+from exercicio_g import executar as executar_g
+from exercicio_h import executar as executar_h
+from exercicio_i import executar as executar_i
 
 
 def main():
