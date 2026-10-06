@@ -70,7 +70,7 @@ Qualidade e testes:
 ```bash
 ruff check src tests tools 2_kNN/*.py 3_NaiveBayes/Parte1/pre_processamento_credito.py 3_NaiveBayes/Parte2/naive_bayes_pt2.py 3_NaiveBayes/Parte3/*.py
 ruff format --check src tests tools 2_kNN/*.py 3_NaiveBayes/Parte1/pre_processamento_credito.py 3_NaiveBayes/Parte2/naive_bayes_pt2.py 3_NaiveBayes/Parte3/*.py
-pytest
+python -m pytest
 python tools/check_notebooks.py
 python tools/execute_smoke_notebook.py
 ```

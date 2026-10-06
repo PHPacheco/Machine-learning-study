@@ -44,6 +44,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 addopts = "-ra --strict-markers -p no:cacheprovider"
 testpaths = ["tests"]
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
@@ -52,4 +53,3 @@ extend-exclude = ["archive"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "RUF"]
-
