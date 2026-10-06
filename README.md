@@ -57,6 +57,7 @@ python 2_kNN/demoD1.py
 python 2_kNN/demoD2.py
 python 2_kNN/demoD3.py
 python 2_kNN/demoD4.py
+python tools/execute_smoke_notebook.py 3_NaiveBayes/classificadores_credito.ipynb
 ```
 
 Para abrir o material canônico:
