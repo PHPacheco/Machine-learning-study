@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from Regressão.fase2.regmultipla import regmultipla
+from ml_studies.regression import multiple_linear_regression
 
 
 def carregar_base() -> pd.DataFrame:
@@ -69,4 +69,4 @@ def calcular_correlacoes(base: pd.DataFrame) -> dict[str, float]:
 
 def calcular_theta(base: pd.DataFrame) -> np.ndarray:
     _, x, y = montar_X_y(base)
-    return regmultipla(x, y)
+    return multiple_linear_regression(x, y)

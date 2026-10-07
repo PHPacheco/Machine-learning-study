@@ -1,4 +1,4 @@
-from Regressão.fase2.fase2_utils import carregar_base, montar_X_y
+from fase2_utils import carregar_base, montar_X_y
 
 
 def executar(base=None):

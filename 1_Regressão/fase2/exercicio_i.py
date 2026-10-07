@@ -1,6 +1,6 @@
 import numpy as np
 
-from Regressão.fase2.fase2_utils import calcular_theta, carregar_base, montar_X_y
+from fase2_utils import calcular_theta, carregar_base, montar_X_y
 from sklearn.linear_model import LinearRegression
 
 
