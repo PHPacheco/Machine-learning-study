@@ -44,7 +44,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 addopts = "-ra --strict-markers -p no:cacheprovider"
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = ["src"]
 
 [tool.ruff]
 line-length = 100

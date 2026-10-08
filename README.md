@@ -12,11 +12,14 @@ exemplos com protocolos de avaliação mais seguros.
 
 | Módulo | Assunto | Algoritmos | Dados | Situação dos resultados |
 | --- | --- | --- | --- | --- |
-| `1_Regressão` | regressão simples, múltipla e polinomial | mínimos quadrados, correlação de Pearson | TXT, CSV e MAT incluídos | notebooks preservados e limpos; funções centrais testadas |
-| `2_kNN` | classificação baseada em vizinhos | kNN, `MinMaxScaler`, `GridSearchCV` | quatro grupos MAT incluídos | métricas geradas pelos scripts, sem seleção de `k` no teste |
-| `3_NaiveBayes` | classificação tabular | Naive Bayes, árvore, floresta, regressão logística e SVM | risco de crédito em CSV e um artefato legado | conclusões estáticas removidas; métricas geradas em execução |
-| `4_RNA_REDE_NEURAL` | redes densas e convolucionais | TensorFlow/Keras e PyTorch | Breast Cancer Wisconsin e MNIST | notebooks didáticos; execução completa requer extras pesados |
-| `4_TrabalhoFinal` | identificação facial closed-set | SVM e kNN sobre embeddings | LFW, não redistribuído | migrado para o projeto privado `reconhecimento-facial-lfw` |
+| [`regressoes`](regressoes/) | regressão simples, múltipla e polinomial | mínimos quadrados, correlação de Pearson | TXT, CSV e MAT incluídos | três notebooks preservados e funções centrais testadas |
+| [`classificacao-knn`](classificacao-knn/) | classificação baseada em vizinhos | kNN, `MinMaxScaler`, `GridSearchCV` | quatro grupos MAT incluídos | métricas geradas pelo pipeline, sem seleção de `k` no teste |
+| [`classificadores-de-credito`](classificadores-de-credito/) | classificação tabular | Naive Bayes, árvore, floresta, regressão logística e SVM | risco de crédito em CSV e um artefato legado | conclusões e métricas geradas em execução |
+| [`redes-neurais`](redes-neurais/) | redes densas e convolucionais | TensorFlow/Keras e PyTorch | Breast Cancer Wisconsin e Fashion-MNIST | três notebooks didáticos; execução completa requer extras pesados |
+
+O trabalho final de identificação facial não faz parte desta coleção. Ele foi
+separado em um [repositório próprio](https://github.com/PHPacheco/reconhecimento-facial-lfw),
+que poderá ser renomeado posteriormente sem alterar a organização deste acervo.
 
 O estado de cada notebook e seus bloqueios conhecidos estão em
 [`docs/NOTEBOOKS.md`](docs/NOTEBOOKS.md).
@@ -49,15 +52,15 @@ Nenhum notebook instala dependências durante a execução.
 
 ## Execução
 
-Os exemplos de kNN aplicam o scaler somente dentro dos folds de treino, fazem
-seleção de hiperparâmetros por validação cruzada e usam o teste uma única vez:
+Os exemplos aplicam o pré-processamento aprendido somente no treino. No kNN,
+os hiperparâmetros são selecionados por validação cruzada e o teste é usado uma
+única vez:
 
 ```bash
-python 2_kNN/demoD1.py
-python 2_kNN/demoD2.py
-python 2_kNN/demoD3.py
-python 2_kNN/demoD4.py
-python tools/execute_smoke_notebook.py 3_NaiveBayes/classificadores_credito.ipynb
+python regressoes/exemplo.py
+python classificacao-knn/exemplo.py
+python classificadores-de-credito/exemplo.py
+python tools/execute_smoke_notebook.py classificadores-de-credito/classificadores_credito.ipynb
 ```
 
 Para abrir o material canônico:
@@ -69,8 +72,8 @@ jupyter lab
 Qualidade e testes:
 
 ```bash
-ruff check src tests tools 2_kNN/*.py 3_NaiveBayes/Parte1/pre_processamento_credito.py 3_NaiveBayes/Parte2/naive_bayes_pt2.py 3_NaiveBayes/Parte3/*.py
-ruff format --check src tests tools 2_kNN/*.py 3_NaiveBayes/Parte1/pre_processamento_credito.py 3_NaiveBayes/Parte2/naive_bayes_pt2.py 3_NaiveBayes/Parte3/*.py
+ruff check src tests tools regressoes/exemplo.py classificacao-knn/exemplo.py classificadores-de-credito/exemplo.py
+ruff format --check src tests tools regressoes/exemplo.py classificacao-knn/exemplo.py classificadores-de-credito/exemplo.py
 python -m pytest
 python tools/check_notebooks.py
 python tools/execute_smoke_notebook.py
@@ -93,7 +96,7 @@ python tools/execute_smoke_notebook.py
 ## Artefatos `pickle`
 
 Os pickles de risco de crédito e a cópia duplicada de `credit.pkl` foram
-removidos. Mantém-se somente `3_NaiveBayes/Parte2/credit.pkl`, pois os dados
+removidos. Mantém-se somente `classificadores-de-credito/dados/credit.pkl`, pois os dados
 brutos correspondentes não estavam no histórico. O loader exige
 `trusted=True` e emite um aviso: **pickle pode executar código arbitrário e
 nunca deve ser carregado de origem não confiável**. Consulte
@@ -120,22 +123,15 @@ isso, esta reorganização deve permanecer privada até confirmação. Datasets 
 bibliotecas mantêm seus próprios termos. Em especial, arquivos do LFW não são
 redistribuídos aqui.
 
-O remote `upstream` deve apontar para o projeto acadêmico original:
-
-```bash
-git remote add upstream https://github.com/pkalbuquerque/AprendizadoDeMaquina.git
-git fetch upstream
-```
-
 ## Estrutura
 
 ```text
 src/ml_studies/       funções reutilizáveis de regressão, kNN e loaders
 tests/                testes unitários leves
 docs/                 decisões, segurança e estado dos notebooks
-1_Regressão/          estudos de regressão
-2_kNN/                estudos e datasets de kNN
-3_NaiveBayes/         classificadores tabulares
-4_RNA_REDE_NEURAL/    TensorFlow/Keras e PyTorch
+regressoes/            três projetos de regressão e seus dados
+classificacao-knn/     notebook, exemplo e quatro datasets de kNN
+classificadores-de-credito/  notebook, exemplo e dados acadêmicos
+redes-neurais/         notebooks TensorFlow/Keras, PyTorch e CNN
 .github/workflows/    CI leve, sem treinamento de redes
 ```

@@ -18,10 +18,10 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev]"
-      - run: ruff check src tests tools 2_kNN/*.py 3_NaiveBayes/Parte1/pre_processamento_credito.py 3_NaiveBayes/Parte2/naive_bayes_pt2.py 3_NaiveBayes/Parte3/*.py
-      - run: ruff format --check src tests tools 2_kNN/*.py 3_NaiveBayes/Parte1/pre_processamento_credito.py 3_NaiveBayes/Parte2/naive_bayes_pt2.py 3_NaiveBayes/Parte3/*.py
+      - run: ruff check src tests tools regressoes/exemplo.py classificacao-knn/exemplo.py classificadores-de-credito/exemplo.py
+      - run: ruff format --check src tests tools regressoes/exemplo.py classificacao-knn/exemplo.py classificadores-de-credito/exemplo.py
       - run: python -m pytest
       - run: python tools/check_notebooks.py
       - run: python tools/execute_smoke_notebook.py
       - name: Smoke test kNN
-        run: python 2_kNN/demoD1.py
+        run: python classificacao-knn/exemplo.py

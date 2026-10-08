@@ -5,7 +5,7 @@ código arbitrário, portanto um arquivo baixado, recebido por mensagem ou
 modificado por terceiros não deve ser aberto.
 
 O único pickle preservado é um artefato acadêmico sem fonte tabular disponível:
-`3_NaiveBayes/Parte2/credit.pkl`. Antes de utilizá-lo:
+`classificadores-de-credito/dados/credit.pkl`. Antes de utilizá-lo:
 
 1. confirme que o arquivo veio deste histórico Git privado;
 2. revise o commit e a integridade do clone;
