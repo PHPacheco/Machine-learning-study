@@ -1,23 +1,29 @@
-"""Exemplo mínimo das funções reutilizáveis de regressão."""
+"""Exemplo curto de regressão linear múltipla."""
 
 from pathlib import Path
 
-from ml_studies.regression import (
-    design_matrix,
-    feature_correlations,
-    load_regression_frame,
-    multiple_linear_regression,
-)
+import numpy as np
+import pandas as pd
 
 
 def main() -> None:
-    dados = Path(__file__).with_name("dados")
-    frame = load_regression_frame(dados)
-    _, matriz, alvo = design_matrix(frame)
-    coeficientes = multiple_linear_regression(matriz, alvo).reshape(-1)
+    arquivo = Path(__file__).with_name("dados") / "data.csv"
+    dados = pd.read_csv(
+        arquivo,
+        header=None,
+        names=["tamanho", "quartos", "preco"],
+    )
 
-    print("correlações:", feature_correlations(frame))
-    print("coeficientes [intercepto, tamanho, quartos]:", coeficientes.tolist())
+    atributos = dados[["tamanho", "quartos"]].to_numpy(dtype=float)
+    alvo = dados["preco"].to_numpy(dtype=float)
+    matriz = np.column_stack([np.ones(len(atributos)), atributos])
+    coeficientes, *_ = np.linalg.lstsq(matriz, alvo, rcond=None)
+
+    correlacoes = dados.corr(numeric_only=True)["preco"].drop("preco")
+    print("Correlações com o preço:")
+    print(correlacoes.round(4).to_string())
+    print("\nCoeficientes [intercepto, tamanho, quartos]:")
+    print(coeficientes.round(4).tolist())
 
 
 if __name__ == "__main__":

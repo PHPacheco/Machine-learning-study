@@ -1,14 +1,16 @@
 # Regressões
 
-Os três projetos da atividade estão preservados como notebooks independentes:
+Esta pasta reúne as três etapas do trabalho de regressão:
 
-- `regressao_linear_simples.ipynb` — correlação e regressão linear simples;
-- `regressao_linear_multipla.ipynb` — regressão de preço por tamanho e quartos;
-- `regressao_polinomial.ipynb` — comparação de graus, generalização e
-  overfitting.
+- `regressao_linear_simples.ipynb`: correlação e ajuste de uma reta;
+- `regressao_linear_multipla.ipynb`: estimativa de preço a partir de tamanho e
+  quantidade de quartos;
+- `regressao_polinomial.ipynb`: comparação entre polinômios de diferentes
+  graus e discussão sobre overfitting.
 
-Os dados ficam em `dados/`. O código reutilizável está no pacote
-`ml_studies.regression`; um uso mínimo pode ser executado com:
+Os arquivos usados pelos notebooks estão em `dados/`. O exemplo em Python
+carrega o conjunto da regressão múltipla e calcula as correlações e os
+coeficientes do modelo:
 
 ```bash
 python regressoes/exemplo.py

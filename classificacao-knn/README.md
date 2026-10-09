@@ -1,15 +1,15 @@
 # Classificação com kNN
 
-`classificacao_knn.ipynb` apresenta o protocolo canônico: o
-`MinMaxScaler` permanece dentro da `Pipeline`, os hiperparâmetros são escolhidos
-por validação cruzada no treino e o teste é consultado uma única vez.
+O notebook apresenta uma versão curta do experimento. O arquivo `exemplo.py`
+executa os quatro conjuntos de dados originais, disponíveis em `dados/`.
 
-Os quatro datasets originais estão em `dados/`. O exemplo Python executa todos
-eles com o mesmo protocolo:
+A normalização faz parte da mesma `Pipeline` do classificador. Dessa forma, o
+scaler é ajustado somente com os dados de treino de cada divisão. O valor de
+`k`, a forma de votação e a medida de distância são escolhidos por validação
+cruzada. O teste é usado apenas depois dessa escolha.
 
 ```bash
 python classificacao-knn/exemplo.py
 ```
 
-No dataset D4, a primeira coluna é removida porque representa um identificador,
-não uma característica preditiva.
+No conjunto D4, a primeira coluna é um identificador e não entra no treinamento.
